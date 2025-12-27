@@ -1,9 +1,10 @@
-//file import
-const sequelize = require('./common/database');
-const defineUser = require('./common/models/Event');
-const User = defineUser(sequelize);
 
-sequelize.sync();
+//file import
+//const sequelize = require('./common/database.cjs');
+//const defineEvent = require('./common/models/Event.cjs');
+//const Event = defineEvent(sequelize);
+
+//sequelize.sync();
 
 //server setup
 const express = require('express');

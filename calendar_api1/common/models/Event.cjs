@@ -1,3 +1,5 @@
+//import { Sequelize, DataTypes } from 'sequelize';
+
 const { DataTypes } = require('sequalize');
 
 const EventModel = {
