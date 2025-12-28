@@ -2,7 +2,7 @@ import express, { json } from 'express';
 const app = express();
 const port = 3000;
 
-//event class
+//event class declaration
 class Event {
     constructor(context_code, title, description, location_name, start_at, end_at) {
         this.context_code = context_code;
@@ -14,23 +14,16 @@ class Event {
     }
 }
 
-//import pkg from './event.js';
-//const { Event } = pkg;
+
 const jsonArray = ['{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
                   '{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
                   '{"id":"1165513","startdate":"2026-01-27","starttime":"14:45","enddate":"2026-01-27","endtime":"16:15","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}'
                   ]
-let eventsArray = [];
-let jsonString = ''
-for (let i = 0; i < jsonArray.length; i++) {
-  jsonString = jsonArray[i];
-  let jsonObj = JSON.parse(jsonString);
-  const reqEvent = new Event("S7012E", jsonObj.columns[0], jsonObj.columns[7], jsonObj.columns[1], jsonObj.startdate + "T" + jsonObj.starttime + ":00Z", jsonObj.enddate + "T" + jsonObj.endtime + ":00Z");
-  eventsArray.push(reqEvent);
-  console.log(eventsArray);
-}
+let eventsArray = jsonToObject(jsonArray);
+console.log(eventsArray[0]);
 
 
+//REST API
 app.use(json()); // Middleware to parse JSON requests
 
 app.get('/', (req, res) => {
@@ -81,4 +74,15 @@ app.post('/events', (req, res) => {
 //  }
 //});
 
-
+//creating the event objects from json
+function jsonToObject(jsonArray) {
+  let objArray = [];
+  let jsonString = ''
+  for (let i = 0; i < jsonArray.length; i++) {
+    jsonString = jsonArray[i];
+    let jsonObj = JSON.parse(jsonString);
+    const reqEvent = new Event("S7012E", jsonObj.columns[0], jsonObj.columns[7], jsonObj.columns[1], jsonObj.startdate + "T" + jsonObj.starttime + ":00Z", jsonObj.enddate + "T" + jsonObj.endtime + ":00Z");
+    objArray.push(reqEvent);
+  }
+  return objArray;
+}
