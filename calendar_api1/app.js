@@ -14,10 +14,9 @@ app.listen(port, () => {
 });
 
 app.get('/events', (req, res) => {
-  const event = [
-    { id: 1, context_code: "473847", title: 'title1', description: "hfhfhfhf", start_at: '2026-07-19T21:00:00Z', end_at: '2012-07-19T22:00:00Z' },
-    { id: 2, context_code: "47384322", title: 'Name2' },
-  ];
+  const {id, context_code, title, description, start_at, end_at} = req.body;
+  const event = 
+    //{ id: 1, context_code: "473847", title: 'title1', description: "hfhfhfhf", start_at: '2026-07-19T21:00:00Z', end_at: '2012-07-19T22:00:00Z' },
   res.json(event);
 });
 
