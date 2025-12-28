@@ -2,11 +2,28 @@ import express, { json } from 'express';
 const app = express();
 const port = 3000;
 
-import { Sequelize, DataTypes } from '@sequelize/core';
-import { Event } from './event';
+//import { Sequelize, DataTypes } from '@sequelize/core';
+//import { Event } from './event.js';
 //const Event = Event;
-const event = new Event("dnd4444", "Title1", "ghfjdkkssk", "2012-07-19T22:00:00Z", "2012-07-19T2300:00Z");
 
+class Event {
+    constructor(context_code, title, description, start_at, end_at) {
+        this.context_code = context_code;
+        this.title = title;
+        this.description = description;
+        this.start_at = start_at;
+        this.end_at = end_at;
+    }
+
+    introduce() {
+      console.log(`Hello, my name is ${this.title}`);
+    }
+}
+
+//import pkg from './event.js';
+//const { Event } = pkg;
+const reqEvent = new Event("dnd4444", "Title1", "ghfjdkkssk", "2012-07-19T22:00:00Z", "2012-07-19T2300:00Z");
+console.log(reqEvent.title);
 
 
 app.use(json()); // Middleware to parse JSON requests
@@ -20,9 +37,21 @@ app.listen(port, () => {
 });
 
 
-app.get('/events', async (req, res, re) => {
-  const {context_code, title, description, start_at, end_at} = req.body;
-  const
+app.get('/events', async (req, res) => {
+  //const {context_code, title, description, start_at, end_at} = req.body;
+  const event = [
+    {context_code: "reqEvent.context_code",
+    title: "reqEvent.title",
+    description: "reqEvent.description",
+    start_at: "reqEvent.start_at",
+    end_at: "reqEvent.end_at"},
+
+    {context_code: reqEvent.context_code,
+    title: reqEvent.title,
+    description: reqEvent.description,
+    start_at: reqEvent.start_at,
+    end_at: reqEvent.end_at},
+  ];
   res.json(event);
 });
 
