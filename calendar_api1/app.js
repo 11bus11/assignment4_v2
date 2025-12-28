@@ -1,24 +1,42 @@
 
-//file import
-//const sequelize = require('./common/database.cjs');
-//const defineEvent = require('./common/models/Event.cjs');
-//const Event = defineEvent(sequelize);
-
-//sequelize.sync();
-
-//server setup
-const express = require('express');
+import express, { json } from 'express';
 const app = express();
+const port = 3000;
 
-app.use(express.json());
+app.use(json()); // Middleware to parse JSON requests
 
-app.get('/status', (req, res) => {
-  res.json({
-    status: 'Running',
-    timestamp: new Date().toISOString()
-  });
+app.get('/', (req, res) => {
+  res.send('Welcome to the REST API!');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get('/events', (req, res) => {
+  const event = [
+    { id: 1, context_code: "473847", title: 'title1', description: "hfhfhfhf", start_at: '2026-07-19T21:00:00Z', end_at: '2012-07-19T22:00:00Z' },
+    { id: 2, context_code: "47384322", title: 'Name2' },
+  ];
+  res.json(event);
+});
+
+app.post('/events', (req, res) => {
+  const newEvent = {
+    id: 3,
+    name: req.body.name,
+  };
+  res.status(201).json(newUser);
+});
+
+// app.put('/events/:id', (req, res) => {
+//  const user = event.find((u) => u.id === parseInt(req.params.id));
+//  if (user) {
+//    user.name = req.body.name;
+//    res.json(user);
+//  } else {
+//    res.status(404).send('User not found');
+//  }
+//});
+
 
