@@ -2,28 +2,33 @@ import express, { json } from 'express';
 const app = express();
 const port = 3000;
 
-//import { Sequelize, DataTypes } from '@sequelize/core';
-//import { Event } from './event.js';
-//const Event = Event;
-
+//event class
 class Event {
-    constructor(context_code, title, description, start_at, end_at) {
+    constructor(context_code, title, description, location_name, start_at, end_at) {
         this.context_code = context_code;
         this.title = title;
         this.description = description;
+        this.location_name = location_name;
         this.start_at = start_at;
         this.end_at = end_at;
-    }
-
-    introduce() {
-      console.log(`Hello, my name is ${this.title}`);
     }
 }
 
 //import pkg from './event.js';
 //const { Event } = pkg;
-const reqEvent = new Event("dnd4444", "Title1", "ghfjdkkssk", "2012-07-19T22:00:00Z", "2012-07-19T2300:00Z");
-console.log(reqEvent.title);
+const jsonArray = ['{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
+                  '{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
+                  '{"id":"1165513","startdate":"2026-01-27","starttime":"14:45","enddate":"2026-01-27","endtime":"16:15","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}'
+                  ]
+let eventsArray = [];
+let jsonString = ''
+for (let i = 0; i < jsonArray.length; i++) {
+  jsonString = jsonArray[i];
+  let jsonObj = JSON.parse(jsonString);
+  const reqEvent = new Event("S7012E", jsonObj.columns[0], jsonObj.columns[7], jsonObj.columns[1], jsonObj.startdate + "T" + jsonObj.starttime + ":00Z", jsonObj.enddate + "T" + jsonObj.endtime + ":00Z");
+  eventsArray.push(reqEvent);
+  console.log(eventsArray);
+}
 
 
 app.use(json()); // Middleware to parse JSON requests
