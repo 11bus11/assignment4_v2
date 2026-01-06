@@ -1,6 +1,11 @@
 import express, { json } from 'express';
+import path from 'path';
 const app = express();
 const port = 3000;
+
+const appHTML = express();
+const portHTML = 3003;
+const router = express.Router();
 
 //event class declaration
 class Event {
@@ -21,6 +26,19 @@ const jsonArray = ['{"id":"1165512","startdate":"2026-01-21","starttime":"10:15"
                   ]
 let eventsArray = jsonToObject(jsonArray);
 console.log(eventsArray[0]);
+
+//express server
+
+router.get('/',function(req,res){
+  res.sendFile(path.join(import.meta.dirname +'/index.html'));
+  //__dirname : It will resolve to your project folder.
+});
+ 
+//add the router
+appHTML.use('/', router);
+appHTML.listen(process.env.portHTML || 3003);
+ 
+console.log('Running at Port 3003');
 
 
 //REST API
