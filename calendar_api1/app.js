@@ -1,6 +1,7 @@
 import express, { json } from 'express';
 import path from 'path';
 import ejs from 'ejs';
+import {com} from './misc.js';
 
 const app = express();
 const port = 3000;
@@ -21,12 +22,12 @@ class Event {
     }
 }
 
-
 const jsonArray = ['{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
                   '{"id":"1165512","startdate":"2026-01-21","starttime":"10:15","enddate":"2026-01-21","endtime":"11:45","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}',
                   '{"id":"1165513","startdate":"2026-01-27","starttime":"14:45","enddate":"2026-01-27","endtime":"16:15","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}'
                   ]
 let eventsArray = jsonToObject(jsonArray);
+
 
 //express server
 appHTML.set('view engine', 'ejs');
@@ -85,6 +86,9 @@ app.post('/events', (req, res) => {
   res.status(201).json(newUser);
 });
 
+//Canvas API
+
+
 // app.put('/events/:id', (req, res) => {
 //  const user = event.find((u) => u.id === parseInt(req.params.id));
 //  if (user) {
@@ -95,7 +99,9 @@ app.post('/events', (req, res) => {
 //  }
 //});
 
-//creating the event objects from json
+
+
+
 function jsonToObject(jsonArray) {
   let objArray = [];
   let jsonString = ''
