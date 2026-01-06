@@ -1,5 +1,7 @@
 import express, { json } from 'express';
 import path from 'path';
+import ejs from 'ejs';
+
 const app = express();
 const port = 3000;
 
@@ -25,16 +27,17 @@ const jsonArray = ['{"id":"1165512","startdate":"2026-01-21","starttime":"10:15"
                   '{"id":"1165513","startdate":"2026-01-27","starttime":"14:45","enddate":"2026-01-27","endtime":"16:15","columns":["Föreläsning","E239","S7012E","Digital kommunikation","","Jaap van de Beek","","","","Luleå","","",""]}'
                   ]
 let eventsArray = jsonToObject(jsonArray);
-console.log(eventsArray[0]);
 
 //express server
+appHTML.set('view engine', 'ejs');
+appHTML.set('views', import.meta.dirname + '/views');
+
 
 router.get('/',function(req,res){
-  res.sendFile(path.join(import.meta.dirname +'/index.html'));
-  //__dirname : It will resolve to your project folder.
+  const events = eventsArray;
+  res.render('index', { events });
 });
  
-//add the router
 appHTML.use('/', router);
 appHTML.listen(process.env.portHTML || 3003);
  
