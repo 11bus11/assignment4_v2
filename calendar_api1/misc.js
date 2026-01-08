@@ -2,5 +2,4 @@
 
 
 export function com() {
-  //document.getElementById("saveBtn").value = "Test";
 }

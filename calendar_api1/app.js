@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import path from 'path';
 import ejs from 'ejs';
 import {com} from './misc.js';
+//import 'bootstrap';
 
 const app = express();
 const port = 3000;
@@ -36,13 +37,16 @@ appHTML.set('views', import.meta.dirname + '/views');
 
 router.get('/',function(req,res){
   const events = eventsArray;
-  res.render('index', { events });
+  res.render('index', { events }, com());
 });
  
 appHTML.use('/', router);
 appHTML.listen(process.env.portHTML || 3003);
  
 console.log('Running at Port 3003');
+
+
+
 
 
 //REST API
@@ -99,7 +103,15 @@ app.post('/events', (req, res) => {
 //  }
 //});
 
+//const buttonModal = bootstrap.Modal.getInstance('#saveBtn');
+if (typeof window !== 'undefined') {
+  // 👉️ can use document here
+  console.log('You are on the browser')
 
+} else {
+  // 👉️ can't use document here
+  console.log('You are on the server')
+}
 
 
 function jsonToObject(jsonArray) {
